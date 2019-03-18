@@ -1,0 +1,98 @@
+package ru.parhomych.netcracker.hw1_oop.book;
+
+import java.util.Arrays;
+
+public class Book {
+
+    private String name;
+    private Author[] authors;
+    private double price;
+    private int qty = 0;
+
+    public Book(String name, Author[] authors, double price) {
+        this.name = name;
+        this.authors = authors;
+        this.price = price;
+    }
+
+    public Book(String name, Author[] authors, double price, int qty) {
+        this.name = name;
+        this.authors = authors;
+        this.price = price;
+        this.qty = qty;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Author[] getAuthors() {
+        return authors;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
+
+    @Override
+    public String toString() {
+        return "Book[" +
+                "name='" + name + '\'' +
+                ", authors=" + Arrays.toString(authors) +
+                ", price=" + price +
+                ", qty=" + qty +
+                ']';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        return (Double.compare(book.price, price) == 0) &&
+                (qty == book.qty)&&
+                (name.equals(book.name))&&
+                Arrays.equals(authors, book.authors);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        long temp;
+        result = 31 * result + name.hashCode();
+        for (int i = 0; i < authors.length; i++) {
+            result = 31 * result + authors[i].hashCode();
+        }
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + qty;
+        return result;
+    }
+
+    public String getAuthorNames() {
+        String authorNames = "";
+        for(int i = 0; i < authors.length; i++){
+            if (i == 0){
+                authorNames += authors[i].getName();
+            }else {
+                authorNames += (", " +authors[i].getName());
+            }
+        }
+
+        return authorNames;
+    }
+}
